@@ -5,3 +5,6 @@
 - `@ComponentScan`: finds components below the application class package.
 
 Property precedence is defaults, `application.properties`, environment variables, then command-line arguments; the last value wins, so a CLI `--server.port=8081` overrides `server.port=8080`.
+
+- `@Primary` provides the default bean when several candidates exist.
+- `@Qualifier` selects one specifically named bean at an injection point.
