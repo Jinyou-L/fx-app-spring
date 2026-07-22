@@ -7,3 +7,5 @@ curl -i -X POST localhost:8080/api/conversions -H "Content-Type: application/jso
 curl -i localhost:8080/api/rates/EUR/XXX
 # bad payload (negative amount) -> 400 JSON via the validation handler
 curl -i -X POST localhost:8080/api/conversions -H "Content-Type: application/json" -d '{"base":"EUR","quote":"USD","amount":-5}'
+# malformed JSON -> 400 with a clean JSON body via the unreadable-message handler
+curl -i -X POST localhost:8080/api/conversions -H "Content-Type: application/json" -d 'not json'

@@ -2,6 +2,7 @@ package com.fx.api.web;
 
 import com.fx.api.service.UnknownPairException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -14,5 +15,9 @@ public class ApiExceptionHandler {
     public Map<String, String> invalid(MethodArgumentNotValidException e) {
         var error = e.getBindingResult().getFieldErrors().stream().findFirst();
         return Map.of("error", error.map(x -> x.getField() + ": " + x.getDefaultMessage()).orElse("invalid request"));
+    }
+    @ExceptionHandler(HttpMessageNotReadableException.class) @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> malformedJson() {
+        return Map.of("error", "malformed JSON body");
     }
 }
